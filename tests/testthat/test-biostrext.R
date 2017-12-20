@@ -14,4 +14,6 @@ test_that("DNAString is properly splitted in chunks",{
   expect_is(split_in_windows(test_DNAString1,15,1),"DNAStringSet")
   expect_error(split_in_windows(test_DNAString1,10,-3))
   expect_error(split_in_windows(test_DNAString1,-2,-3))
+  expect_error(split_in_windows(test_DNAString1,"10",3))
+  expect_error(split_in_windows(test_DNAString1,10,"3"))
 })

@@ -15,6 +15,8 @@ test_that("GC is properly calculated for DNAString",{
   expect_error(calc_GC_single(test_DNAString1_seq))
   expect_equal(calc_GC_single(test_DNAString_AT),0)
   expect_equal(calc_GC_single(test_DNAString_GC),100)
+  expect_is(calc_GC(test_DNAString1),"numeric")
+  expect_equal(calc_GC(test_DNAString1),50)
 })
 
 test_that("GC is properly calculated for chunks",{

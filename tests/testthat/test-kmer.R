@@ -10,6 +10,7 @@ test_that("kmers are properly found in DNAString objects",{
   expect_equal(unname(get_max_kmer_single(test_DNAString1,3)),22)
   expect_equal(names(get_max_kmer_single(test_DNAString1,3)),"CGA")
   expect_error(get_max_kmer_single(test_DNAString1))
+  expect_error(get_max_kmer_single(k=3))
   expect_error(get_max_kmer_single(test_DNAString1,11))
   expect_error(get_max_kmer_single(test_noDNAString1,3))
   expect_equal(unname(get_max_kmer(test_DNAString1,3)),22)
@@ -22,6 +23,7 @@ test_that("kmers are properly found in DNAString objects",{
   expect_error(get_max_kmer_single(test_DNAString2,16,force_large_kmer = TRUE))
   expect_error(get_max_kmer_single(test_DNAString1,0))
   expect_error(get_max_kmer_single(test_DNAString1,-1))
+  expect_error(get_max_kmer_single(test_DNAString1,"3"))
 })
 
 
@@ -29,11 +31,14 @@ test_that("kmers are properly found in DNAStringSet objects",{
   expect_is(get_max_kmer(test_DNAStringSet,3),"numeric")
   expect_equal(unname(get_max_kmer(test_DNAStringSet,3)),c(22,10,1))
   expect_equal(names(get_max_kmer(test_DNAStringSet,3)),c("CGA","AGC","ACA"))
+  expect_equal(unname(get_max_kmer(test_DNAStringSet,10)),c(10,6,NA))
   expect_error(get_max_kmer(test_DNAStringSet))
   expect_error(get_max_kmer(test_DNAStringSet,11))
   expect_error(get_max_kmer(test_DNAString1_seq,3))
   expect_error(get_max_kmer(test_DNAStringSet,0))
   expect_error(get_max_kmer(test_DNAStringSet,-2))
+  expect_error(get_max_kmer(test_DNAString1,"3"))
+  expect_error(get_max_kmer(test_DNAStringSet,"3"))
 })
 
 
@@ -42,6 +47,8 @@ test_that("kmer distribution is properly plotted",{
   expect_error(plot_kmer_distribution(test_DNAString1,kmer_seq_not_present))
   expect_error(plot_kmer_distribution(test_DNAString1_seq,kmer_seq))
   expect_error(plot_kmer_distribution(test_DNAStringSet,kmer_seq))
-  expect_error(plot_kmer_distribution(test_DNAStringSet,""))
+  expect_error(plot_kmer_distribution(test_DNAStringSet,kmer_seq_empty))
+  expect_error(plot_kmer_distribution(test_DNAStringSet,kmer_seq_wrong_letters))
+  expect_error(plot_kmer_distribution(test_DNAStringSet,0))
 })
 

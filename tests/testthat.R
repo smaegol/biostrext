@@ -16,5 +16,7 @@ test_DNAString_AT <- Biostrings::DNAString(test_DNAString_AT_seq)
 test_DNAStringSet <- Biostrings::DNAStringSet(c(test_DNAString1_seq,test_DNAString2_seq,test_DNAString3_seq))
 kmer_seq = "GCAT"
 kmer_seq_not_present = "CAGTC"
+kmer_seq_empty = ""
+kmer_seq_wrong_letters = "ARG"
 
 test_check("biostrext")
