@@ -4,14 +4,14 @@
 \alias{calc_windowed_GC}
 \title{Split provided DNAString in chunks and calculate %GC for each chunk}
 \usage{
-calc_windowed_GC(x, window, overlap)
+calc_windowed_GC(x, window, overlap = 0)
 }
 \arguments{
 \item{x}{DNAString object}
 
 \item{window}{size of a sequence chunk}
 
-\item{overlap}{size of the overlap between chunks (have to be < window)}
+\item{overlap}{size of the overlap between chunks (have to be < window, default =0)}
 }
 \value{
 vector of calculated %GC content for each chunk generated

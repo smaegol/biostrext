@@ -4,14 +4,14 @@
 \alias{split_in_windows}
 \title{Split a DNAString object in smaller chunks}
 \usage{
-split_in_windows(x, window, overlap)
+split_in_windows(x, window, overlap = 0)
 }
 \arguments{
 \item{x}{DNAString object}
 
 \item{window}{size of a sequence chunk}
 
-\item{overlap}{size of the overlap between chunks (have to be < window)}
+\item{overlap}{size of the overlap between chunks (have to be < window, default = 0)}
 }
 \value{
 DNAStringSet object

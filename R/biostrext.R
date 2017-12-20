@@ -81,14 +81,14 @@ calc_GC_single <- function(x) {
 #'
 #' @param x DNAString object
 #' @param window size of a sequence chunk
-#' @param overlap size of the overlap between chunks (have to be < window)
+#' @param overlap size of the overlap between chunks (have to be < window, default = 0)
 #'
 #' @return DNAStringSet object
 #' @export
 #'
 #' @examples
 #' split_in_windows(Biostrings::DNAString("ACGTAGCATGCTAGCTACGTAGCTA"),4,1)
-split_in_windows <- function(x,window,overlap) {
+split_in_windows <- function(x,window,overlap = 0) {
 
   if (!requireNamespace("Biostrings", quietly = TRUE)) {
     stop("Biostrings package needed for this function to work. Please install it.",
@@ -97,6 +97,8 @@ split_in_windows <- function(x,window,overlap) {
 
   assertthat::assert_that(is_DNAstring(x))
   assertthat::assert_that(window<=length(x))
+  assertthat::assert_that(window>0)
+  assertthat::assert_that(overlap>=0)
   assertthat::assert_that(overlap<window)
 
   seq_length = length(x)
@@ -155,14 +157,14 @@ calc_GC <- function(x) {
 #'
 #' @param x DNAString object
 #' @param window size of a sequence chunk
-#' @param overlap size of the overlap between chunks (have to be < window)
+#' @param overlap size of the overlap between chunks (have to be < window, default =0)
 #'
 #' @return vector of calculated %GC content for each chunk generated
 #' @export
 #'
 #' @examples
 #' calc_windowed_GC(Biostrings::DNAString("CAGTCAGTCGATC"),10,2)
-calc_windowed_GC <- function(x,window,overlap) {
+calc_windowed_GC <- function(x,window,overlap = 0) {
   if (!requireNamespace("Biostrings", quietly = TRUE)) {
     stop("Biostrings package needed for this function to work. Please install it.",
          call. = FALSE)
@@ -178,21 +180,28 @@ calc_windowed_GC <- function(x,window,overlap) {
 #'
 #' @param x DNAString object
 #' @param mer kmer length
+#' @param force_large_kmer logical, should calcualtion of large kmers be possible (but shorter than 15)
 #'
 #' @return named numeric, with count of given kmer and its sequence as name
 #' @export
 #'
 #' @examples
 #' get_max_kmer_single(Biostrings::DNAString("CAGCTGCACACATCGTACA"),3)
-get_max_kmer_single <- function(x,mer) {
+get_max_kmer_single <- function(x,mer,force_large_kmer = FALSE) {
   if (!requireNamespace("Biostrings", quietly = TRUE)) {
     stop("Biostrings package needed for this function to work. Please install it.",
          call. = FALSE)
   }
   assertthat::assert_that(is_DNAstring(x))
+  assertthat::assert_that(mer>0)
   assertthat::assert_that(mer<length(x))
-  if (mer>10) {
-    stop("Calculation of kmers larger than 10 is computationally intensive and may take a long time",
+  if (mer>10 && !isTRUE(force_large_kmer)) {
+    stop("Calculation of kmers larger than 10 is computationally intensive and may take a long time.
+If you need that, specify force_large_kmer=TRUE (use with caution!)",
+         call. = FALSE)
+  }
+  if (mer>15 && isTRUE(force_large_kmer)) {
+    stop("Calculation of kmers larger than 15 is extremally computationally intensive and it is discouraged to use.",
          call. = FALSE)
   }
   oligoFreq <- Biostrings::oligonucleotideFrequency(x,mer)
@@ -220,6 +229,7 @@ get_max_kmer <- function(x,mer) {
          call. = FALSE)
   }
   assertthat::assert_that(is_DNAstring(x) || is_DNAstringSet(x))
+  assertthat::assert_that(mer>0)
   if(is_DNAstring(x)) {
     value = get_max_kmer_single(x,mer)
   }
@@ -227,7 +237,12 @@ get_max_kmer <- function(x,mer) {
     set_length = length(x)
     value <- numeric(0)
     for (z in seq(1,set_length)) {
-      value_temp <- get_max_kmer_single(x[[z]],mer)
+      if (length(x[[z]])>mer) {
+        value_temp <- get_max_kmer_single(x[[z]],mer)
+      }
+      else {
+        value_temp <- 'NA'
+      }
       value<-c(value,value_temp)
     }
   }
@@ -252,6 +267,7 @@ plot_GC_distribution <- function(x,window,overlap) {
   }
 
   assertthat::assert_that(is_DNAstring(x))
+  assertthat::assert_that(length(x)/(window-overlap)>20)
   splitted_seq <- split_in_windows(x,window,overlap)
   step=window-overlap
   positions<-seq(1,length(x)-window+step+1,step)
@@ -269,10 +285,11 @@ plot_GC_distribution <- function(x,window,overlap) {
 #' @param x DNAString object
 #' @param kmer - string
 #'
-#' @return
+#' @return plot with distribution of given kmer across sequence
 #' @export
 #'
 #' @examples
+#' plot_kmer_distribution(Biostrings::DNAString("CAGCTAGCTAGCTAGGCAGCTAGCTAGCTAGCATGCTAGCTAGCTAGCTACGTACGTAGCTACACTAGCTAGCTAGCTAGCTAATAATTATGGCGCGC"),"TAC")
 plot_kmer_distribution <- function(x,kmer) {
   if (!requireNamespace("Biostrings", quietly = TRUE)) {
     stop("Biostrings package needed for this function to work. Please install it.",
