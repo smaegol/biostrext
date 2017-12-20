@@ -1,0 +1,20 @@
+Package: biostrext
+Type: Package
+Title: Extension to Biostrings
+Version: 0.1.0
+Author: Pawel Krawczyk
+Maintainer: Pawel Krawczyk <p.krawczyk@ibb.waw.pl>
+Description: Extends Biostrings functionality
+    Provide convenient functions for %GC calculation, splitting of DNA sequence with sliding window
+    and calculation of %GC on generated fragments. Generate plots of %GC across sequence.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    Biostrings,
+    assertthat,
+    reshape,
+    ggplot2
+RoxygenNote: 6.0.1
+Suggests: covr,
+    testthat
