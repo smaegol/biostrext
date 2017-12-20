@@ -1,6 +1,4 @@
 
-
-
 #' Checks if provided object is of class DNAString
 #'
 #' @param x - R object
