@@ -4,7 +4,7 @@
 \alias{get_max_kmer}
 \title{Calculates maximum kmer for DNA sequence object (DNAString or DNAStringSet)}
 \usage{
-get_max_kmer(x, mer)
+get_max_kmer(x, k)
 }
 \arguments{
 \item{x}{DNAString or DNAStringSet object}

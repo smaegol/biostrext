@@ -2,17 +2,7 @@
 % Please edit documentation in R/biostrext.R
 \name{calc_GC_single}
 \alias{calc_GC_single}
-\title{#' Produce error if is_DNAstring is false
-#'
-#' @param call is_DNAstring invocation
-#' @param env
-#'
-#' @return Error if is_DNAstring call is false
-#'
-on_failure(is_DNAstringSet) <- function(call, env) {
-  paste0(deparse(call$x), " is not a DNAStringSet object")
-}
-Calculates %GC content for a single DNAString object}
+\title{Calculates %GC content for a single DNAString object}
 \usage{
 calc_GC_single(x)
 }
@@ -23,16 +13,6 @@ calc_GC_single(x)
 %GC content of provided sequence
 }
 \description{
-#' Produce error if is_DNAstring is false
-#'
-#' @param call is_DNAstring invocation
-#' @param env
-#'
-#' @return Error if is_DNAstring call is false
-#'
-on_failure(is_DNAstringSet) <- function(call, env) {
-  paste0(deparse(call$x), " is not a DNAStringSet object")
-}
 Calculates %GC content for a single DNAString object
 }
 \examples{

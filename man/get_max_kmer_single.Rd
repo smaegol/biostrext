@@ -4,12 +4,12 @@
 \alias{get_max_kmer_single}
 \title{Title Get kmer which is most frequent in provided sequence}
 \usage{
-get_max_kmer_single(x, mer, force_large_kmer = FALSE)
+get_max_kmer_single(x, k, force_large_kmer = FALSE)
 }
 \arguments{
 \item{x}{DNAString object}
 
-\item{mer}{kmer length}
+\item{k}{kmer length}
 
 \item{force_large_kmer}{logical, should calcualtion of large kmers be possible (but shorter than 15)}
 }

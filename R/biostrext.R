@@ -171,7 +171,7 @@ calc_GC <- function(x) {
     #initialize numeric vector for return values
     GC <- numeric(0)
     #calculate %GC for each element in set
-    for (z in seq(1,sno_elements_in_set)) {
+    for (z in seq(1,no_elements_in_set)) {
       GC_temp <- calc_GC_single(x[[z]])
       GC<-c(GC,GC_temp)
     }
